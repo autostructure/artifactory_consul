@@ -2,6 +2,7 @@
 
 
 import org.artifactory.fs.ItemInfo
+import org.artifactory.fs.FileLayoutInfo
 import org.artifactory.repo.RepoPath
 import groovyx.net.http.RESTClient
 
