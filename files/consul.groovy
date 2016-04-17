@@ -28,7 +28,7 @@ storage {
 
     // Gets the actual layout of the repository the artifact is deployed to
     if (currentLayout.isValid()) {
-      String application = repositories.getProperty(repoPath, 'module')
+      String application = currentLayout.getModule()
       String applicationTier = repositories.getProperty(repoPath, 'tier')
 
       log.warn(' ' + repositories.getProperties(repoPath))
