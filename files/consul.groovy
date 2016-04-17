@@ -20,7 +20,7 @@ storage {
   * item (org.artifactory.fs.ItemInfo) - the original item being created.
   */
   afterCreate { ItemInfo item ->
-    RepoPath repoPath = item.getRepoPath()
+    RepoPath repoPath = item.repoPath
 
     // Gets the full path of the artifact, including the repo
     FileLayoutInfo currentLayout = repositories.getLayoutInfo(repoPath)
