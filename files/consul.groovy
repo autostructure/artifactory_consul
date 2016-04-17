@@ -31,7 +31,7 @@ storage {
       String application = repositories.getProperty(repoPath, 'module')
       String applicationTier = repositories.getProperty(repoPath, 'tier')
 
-      log.warn(repositories.getProperties(repoPath))
+      log.warn(' ' + repositories.getProperties(repoPath))
 
       String _applicationTier = null
 
