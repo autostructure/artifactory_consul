@@ -31,6 +31,8 @@ storage {
       String application = repositories.getProperty(repoPath, 'module')
       String applicationTier = repositories.getProperty(repoPath, 'tier')
 
+      System.out.println(repositories.getProperties(repoPath))
+
       String _applicationTier = null
 
       // If tier is not available deploy DEV
