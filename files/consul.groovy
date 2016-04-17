@@ -2,6 +2,7 @@
 
 
 import org.artifactory.fs.ItemInfo
+import org.artifactory.repo.RepoPath
 import groovyx.net.http.RESTClient
 
 /**
@@ -19,7 +20,20 @@ storage {
   * item (org.artifactory.fs.ItemInfo) - the original item being created.
   */
   afterCreate { ItemInfo item ->
-    def create = new RESTClient( 'http://localhost:8500/v1/event/fire/create')
-    create.put()
+    RepoPath repoPath = item.getRepoPath()
+
+    // Gets the full path of the artifact, including the repo
+    FileLayoutInfo currentLayout = repositories.getLayoutInfo(repoPath)
+
+    // Gets the actual layout of the repository the artifact is deployed to
+    if (currentLayout.isValid()) {
+      String application = repositories.getProperty(repoPath, 'module')
+      RESTClient create = new RESTClient( 'http://localhost:8500/')
+
+      def response = create.put(path: 'v1/event/fire/create_' + application)
+    }
+    else {
+      log.warn("Layout is invalid for storage creation")
+    }
   }
 }
