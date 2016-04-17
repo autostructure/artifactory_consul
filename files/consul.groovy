@@ -31,7 +31,7 @@ storage {
       String application = repositories.getProperty(repoPath, 'module')
       RESTClient create = new RESTClient( 'http://localhost:8500/')
 
-      def response = create.put(path: 'v1/event/fire/create)
+      def response = create.put(path: 'v1/event/fire/create')
     }
     else {
       log.warn("Layout is invalid for storage creation")
