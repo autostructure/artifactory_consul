@@ -29,9 +29,21 @@ storage {
     // Gets the actual layout of the repository the artifact is deployed to
     if (currentLayout.isValid()) {
       String application = repositories.getProperty(repoPath, 'module')
+      String applicationTier = repositories.getProperty(repoPath, 'tier')
+
+      String _applicationTier = null
+
+      // If tier is not available deploy DEV
+      if(applicationTier) {
+        _applicationTier = applicationTier
+      }
+      else {
+        _applicationTier = 'DEV'
+      }
+
       RESTClient create = new RESTClient( 'http://localhost:8500/')
 
-      def response = create.put(path: 'v1/event/fire/create')
+      def response = create.put(path: 'v1/event/fire/create_' + _applicationTier + '_' + application)
     }
     else {
       log.warn("Layout is invalid for storage creation")
