@@ -30,54 +30,10 @@ storage {
     if (currentLayout.isValid()) {
       String application = currentLayout.getModule()
       String repoKey = item.getRepoKey()
-      #String applicationTier = repositories.getProperty(repoPath, 'tier')
-
-      # _applicationTier is the final tier
-      #String _applicationTier = null
-
-      // If tier is not available deploy DEV
-      #if(applicationTier) {
-      #  _applicationTier = applicationTier
-      #}
-      #else {
-      #  _applicationTier = 'dev'
-      #}
 
       RESTClient create = new RESTClient( 'http://localhost:8500/')
 
       def response = create.put(path: 'v1/event/fire/create_' + repoKey + '_' + application)
-    }
-    else {
-      log.warn("Layout is invalid for storage creation")
-    }
-  }
-
-  afterPropertyCreate { ItemInfo item, String name, String[] values ->
-    RepoPath repoPath = item.repoPath
-
-    // Gets the full path of the artifact, including the repo
-    FileLayoutInfo currentLayout = repositories.getLayoutInfo(repoPath)
-
-    // Gets the actual layout of the repository the artifact is deployed to
-    if (currentLayout.isValid()) {
-      String application = currentLayout.getModule()
-      String applicationTier = repositories.getProperty(repoPath, 'tier')
-
-      log.warn(' ' + repositories.getProperties(repoPath))
-
-      String _applicationTier = null
-
-      // If tier is not available deploy DEV
-      if(applicationTier) {
-        _applicationTier = applicationTier
-      }
-      else {
-        _applicationTier = 'DEV'
-      }
-
-      RESTClient create = new RESTClient( 'http://localhost:8500/')
-
-      def response = create.put(path: 'v1/event/fire/create_' + _applicationTier + '_' + application)
     }
     else {
       log.warn("Layout is invalid for storage creation")
