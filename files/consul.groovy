@@ -21,7 +21,7 @@ storage {
   * item (org.artifactory.fs.ItemInfo) - the original item being created.
   */
   afterCreate { ItemInfo item ->
-    RepoPath repoPath = item.repoPath
+    RepoPath repoPath = item.getRepoPath()
 
     // Gets the full path of the artifact, including the repo
     FileLayoutInfo currentLayout = repositories.getLayoutInfo(repoPath)
@@ -29,22 +29,23 @@ storage {
     // Gets the actual layout of the repository the artifact is deployed to
     if (currentLayout.isValid()) {
       String application = currentLayout.getModule()
-      String applicationTier = repositories.getProperty(repoPath, 'tier')
+      String repoKey = item.getRepoKey()
+      #String applicationTier = repositories.getProperty(repoPath, 'tier')
 
       # _applicationTier is the final tier
-      String _applicationTier = null
+      #String _applicationTier = null
 
       // If tier is not available deploy DEV
-      if(applicationTier) {
-        _applicationTier = applicationTier
-      }
-      else {
-        _applicationTier = 'dev'
-      }
+      #if(applicationTier) {
+      #  _applicationTier = applicationTier
+      #}
+      #else {
+      #  _applicationTier = 'dev'
+      #}
 
       RESTClient create = new RESTClient( 'http://localhost:8500/')
 
-      def response = create.put(path: 'v1/event/fire/create_' + _applicationTier + '_' + application)
+      def response = create.put(path: 'v1/event/fire/create_' + repoKey + '_' + application)
     }
     else {
       log.warn("Layout is invalid for storage creation")
