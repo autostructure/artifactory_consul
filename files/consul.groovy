@@ -1,6 +1,5 @@
 @Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.2')
 
-
 import org.artifactory.fs.ItemInfo
 import org.artifactory.fs.FileLayoutInfo
 import org.artifactory.repo.RepoPath
