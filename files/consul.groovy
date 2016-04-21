@@ -32,10 +32,12 @@ storage {
 
       RESTClient create = new RESTClient( 'http://localhost:8500/')
 
-      def response = create.put(path: 'v1/event/fire/create_' + repoKey + '_' + application)
-    }
-    else {
-      log.warn("Layout is invalid for storage creation")
+      try {
+        def response = create.put(path: 'v1/event/fire/create_' + repoKey + '_' + application)
+      }
+      catch(groovyx.net.http.HttpResponseException hre) {
+        log.warn("Consul is not available: " + hre)
+      }
     }
   }
 }
