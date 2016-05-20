@@ -15,7 +15,7 @@ class artifactory_consul {
   # validate parameters here
 
   # class { '::artifactory_consul::install': } ->
-  class { '::artifactory_consul::config': } ~>
-  class { '::artifactory::service': } ->
+  class { '::artifactory_consul::config': } ->
+  #class { '::artifactory::service': } ->
   Class['::artifactory_consul']
 }
